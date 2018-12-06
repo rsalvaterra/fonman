@@ -11,7 +11,8 @@ import java.net.URLEncoder;
 final class LoginManager {
 
 	private static final int MAX_REDIRECTS = 5;
-	private static final int HTTP_TIMEOUT = 30 * 1000;
+	private static final int HTTP_CONNECT_TIMEOUT = 30 * Constants.SECONDS;
+	private static final int HTTP_READ_TIMEOUT = 30 * Constants.SECONDS;
 
 	private static final String CONNECTED = "CONNECTED";
 	private static final String CONNECTION_TEST_URL = "http://cm.fon.mobi/android.txt";
@@ -29,18 +30,20 @@ final class LoginManager {
 	private static final String TAG_RESPONSE_CODE = "ResponseCode";
 	private static final String TAG_WISPR = "WISPAccessGatewayParam";
 	private static final String USER_AGENT = "User-Agent";
-	private static final String USER_AGENT_STRING = "FONAccess; wispr; (Linux; U; Android)";
+	private static final String USER_AGENT_STRING = "FonMan; wispr; (Linux; U; Android)";
 	private static final String USER_NAME = "UserName=";
 	private static final String UTF_8 = "UTF-8";
 	private static final String PASSWORD = "&Password=";
 
 	private static final String[] VALID_SUFFIX = { ".nos.pt", ".fon.com", ".btopenzone.com", ".btfon.com", ".wifi.sfr.fr", ".hotspotsvankpn.com", ".portal.vodafone-wifi.com" };
 
+	private LoginManager() {}
+
 	private static HttpURLConnection buildConnection(final String url) throws IOException {
 		final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 		conn.setRequestProperty(LoginManager.USER_AGENT, LoginManager.USER_AGENT_STRING);
-		conn.setConnectTimeout(LoginManager.HTTP_TIMEOUT);
-		conn.setReadTimeout(LoginManager.HTTP_TIMEOUT);
+		conn.setConnectTimeout(LoginManager.HTTP_CONNECT_TIMEOUT);
+		conn.setReadTimeout(LoginManager.HTTP_READ_TIMEOUT);
 		return conn;
 	}
 
@@ -52,7 +55,7 @@ final class LoginManager {
 				return s.substring(start + 1, end);
 			}
 		}
-		return null;
+		return "";
 	}
 
 	private static int getElementTextAsInt(final String s, final String e) {
@@ -61,7 +64,7 @@ final class LoginManager {
 
 	private static String getPrefixedUserName(final String host, final String user) {
 		if (!(host.contains("belgacom") || host.contains("telekom"))) {
-			if ((host.contains("portal.fon.com") || host.contains("wifi.sfr.fr") || host.equals("www.btopenzone.com"))) {
+			if (host.contains("portal.fon.com") || host.contains("wifi.sfr.fr") || host.equals("www.btopenzone.com")) {
 				return LoginManager.FON_WISPR_PREFIX + user;
 			} else if (host.contains("portal.vodafone-wifi.com")) {
 				return LoginManager.FON_WISPR_PREFIX + LoginManager.FON_ROAM_PREFIX + user;
@@ -76,20 +79,20 @@ final class LoginManager {
 			int redirects = 0;
 			do {
 				final HttpURLConnection conn = LoginManager.buildConnection(target);
-				if (!LoginManager.isRedirect(conn.getResponseCode())) {
+				if (LoginManager.isNoRedirect(conn.getResponseCode())) {
 					return LoginManager.readStream(conn);
 				}
 				target = conn.getHeaderField(LoginManager.LOCATION);
 				conn.disconnect();
 			} while (++redirects != LoginManager.MAX_REDIRECTS);
-		} catch (final IOException e) {
+		} catch (final IOException x) {
 			// Nothing to do.
 		}
 		return null;
 	}
 
-	private static boolean isRedirect(final int rc) {
-		return (rc == HttpURLConnection.HTTP_MOVED_PERM) || (rc == HttpURLConnection.HTTP_MOVED_TEMP) || (rc == HttpURLConnection.HTTP_SEE_OTHER);
+	private static boolean isNoRedirect(final int rc) {
+		return rc != HttpURLConnection.HTTP_MOVED_PERM && rc != HttpURLConnection.HTTP_MOVED_TEMP && rc != HttpURLConnection.HTTP_SEE_OTHER;
 	}
 
 	private static String login(final String url, final String user, final String pass) {
@@ -111,7 +114,7 @@ final class LoginManager {
 							os.close();
 							int redirects = 0;
 							do {
-								if (!LoginManager.isRedirect(conn.getResponseCode())) {
+								if (LoginManager.isNoRedirect(conn.getResponseCode())) {
 									return LoginManager.readStream(conn);
 								}
 								final String target = conn.getHeaderField(LoginManager.LOCATION);
@@ -119,9 +122,10 @@ final class LoginManager {
 								conn = LoginManager.buildConnection(target);
 							} while (++redirects != LoginManager.MAX_REDIRECTS);
 							conn.disconnect();
-						} catch (final IOException e1) {
+						} catch (final IOException x) {
 							// Nothing to do.
 						}
+						break;
 					}
 				}
 			}
@@ -145,26 +149,24 @@ final class LoginManager {
 		return s.replace("&amp;", "&");
 	}
 
-	static LoginResult login(final String user, final String pass) {
+	static String[] login(final String user, final String pass) {
 		int rc = Constants.WRC_ACCESS_GATEWAY_INTERNAL_ERROR;
 		String rm = "";
-		if ((user.length() != 0) && (pass.length() != 0)) {
+		if (user.length() != 0 && pass.length() != 0) {
 			String c = LoginManager.getTestUrl();
 			if (c != null) {
 				if (!c.equals(LoginManager.CONNECTED)) {
 					c = LoginManager.getElementText(c, LoginManager.TAG_WISPR);
-					if ((c != null) && (LoginManager.getElementTextAsInt(c, LoginManager.TAG_MESSAGE_TYPE) == Constants.WMT_INITIAL_REDIRECT) && (LoginManager.getElementTextAsInt(c, LoginManager.TAG_RESPONSE_CODE) == Constants.WRC_NO_ERROR)) {
+					if (LoginManager.getElementTextAsInt(c, LoginManager.TAG_MESSAGE_TYPE) == Constants.WMT_INITIAL_REDIRECT && LoginManager.getElementTextAsInt(c, LoginManager.TAG_RESPONSE_CODE) == Constants.WRC_NO_ERROR) {
 						c = LoginManager.login(LoginManager.getElementText(c, LoginManager.TAG_LOGIN_URL), user, pass);
 						if (c != null) {
 							c = LoginManager.getElementText(c, LoginManager.TAG_WISPR);
-							if (c != null) {
-								final int mt = LoginManager.getElementTextAsInt(c, LoginManager.TAG_MESSAGE_TYPE);
-								if ((mt == Constants.WMT_AUTH_NOTIFICATION) || (mt == Constants.WMT_RESPONSE_AUTH_POLL)) {
-									rc = LoginManager.getElementTextAsInt(c, LoginManager.TAG_RESPONSE_CODE);
-									if ((rc == Constants.WRC_LOGIN_FAILED) || (rc == Constants.WRC_ACCESS_GATEWAY_INTERNAL_ERROR)) {
-										rc = LoginManager.getElementTextAsInt(c, LoginManager.TAG_FON_RESPONSE_CODE);
-										rm = LoginManager.getElementText(c, LoginManager.TAG_REPLY_MESSAGE);
-									}
+							final int mt = LoginManager.getElementTextAsInt(c, LoginManager.TAG_MESSAGE_TYPE);
+							if (mt == Constants.WMT_AUTH_NOTIFICATION || mt == Constants.WMT_RESPONSE_AUTH_POLL) {
+								rc = LoginManager.getElementTextAsInt(c, LoginManager.TAG_RESPONSE_CODE);
+								if (rc == Constants.WRC_LOGIN_FAILED || rc == Constants.WRC_ACCESS_GATEWAY_INTERNAL_ERROR) {
+									rc = LoginManager.getElementTextAsInt(c, LoginManager.TAG_FON_RESPONSE_CODE);
+									rm = LoginManager.getElementText(c, LoginManager.TAG_REPLY_MESSAGE);
 								}
 							}
 						}
@@ -178,7 +180,7 @@ final class LoginManager {
 		} else {
 			rc = Constants.CRC_CREDENTIALS_ERROR;
 		}
-		return new LoginResult(rc, rm);
+		return new String[] { Integer.toString(rc), rm };
 	}
 
 }

@@ -2,6 +2,8 @@ package org.rsalvaterra.fon;
 
 interface Constants {
 
+	int SECONDS = 1000;
+
 	int CRC_ALREADY_AUTHORISED = 1000;
 	int CRC_CREDENTIALS_ERROR = 1001;
 	int CRC_WISPR_NOT_PRESENT = 1002;

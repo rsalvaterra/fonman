@@ -12,7 +12,7 @@
 		<CheckBoxPreference
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:defaultValue="true"
+			android:defaultValue="false"
 			android:key="@string/kautoconnect"
 			android:summary="@string/autoconnectSummary"
 			android:title="@string/autoconnect" />

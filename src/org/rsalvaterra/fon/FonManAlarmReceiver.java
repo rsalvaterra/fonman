@@ -8,7 +8,7 @@ public final class FonManAlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(final Context c, final Intent i) {
-		FonManService.execute(c, i.getAction());
+		FonManService.start(c, i.getAction());
 	}
 
 }

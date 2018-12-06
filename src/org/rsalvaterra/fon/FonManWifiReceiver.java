@@ -14,15 +14,15 @@ public final class FonManWifiReceiver extends BroadcastReceiver {
 	public void onReceive(final Context c, final Intent i) {
 		final String a = i.getAction();
 		if (a.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) && FonManService.isAutoConnectEnabled(c)) {
-			FonManService.execute(c, Constants.ACT_CONNECT);
+			FonManService.start(c, Constants.ACT_CONNECT);
 		} else if (a.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
 			final NetworkInfo ni = (NetworkInfo) i.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 			if (ni.getType() == ConnectivityManager.TYPE_WIFI) {
 				final State s = ni.getState();
 				if (s == State.CONNECTED) {
-					FonManService.execute(c, Constants.ACT_LOGIN);
+					FonManService.start(c, Constants.ACT_LOGIN);
 				} else if (s == State.DISCONNECTED) {
-					FonManService.execute(c, Constants.ACT_CLEANUP);
+					FonManService.start(c, Constants.ACT_CLEANUP);
 				}
 			}
 		}
