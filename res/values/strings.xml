@@ -15,46 +15,46 @@
 	<string name="basic">Basic settings</string>
 	<string name="about">About</string>
 	<string
-		name="kabout"
+		name="pref_about"
 		translatable="false">about</string>
 	<string name="accept">Accept</string>
 	<string
-		name="kusername"
+		name="pref_username"
 		translatable="false">username</string>
 	<string name="username">User name</string>
 	<string name="usernameSummary">Your user name.</string>
 	<string
-		name="kpassword"
+		name="pref_password"
 		translatable="false">password</string>
 	<string name="password">Password</string>
 	<string name="passwordSummary">Your password.</string>
 	<string
-		name="kautoconnect"
+		name="pref_autoconnect"
 		translatable="false">autoconnect</string>
 	<string name="autoconnect">Connect automatically</string>
 	<string name="autoconnectSummary">Automatically connect to any available Fon access point.</string>
 	<string
-		name="kreconnect"
+		name="pref_reconnect"
 		translatable="false">reconnect</string>
 	<string name="reconnect">Allow reconnection</string>
 	<string name="reconnectSummary">Disconnect from Fon and connect to a known network, if found.</string>
 	<string
-		name="ksecure"
+		name="pref_secure"
 		translatable="false">secure</string>
 	<string name="secure">Secure only</string>
 	<string name="secureSummary">Only consider secure networks for reconnection.</string>
 	<string
-		name="kperiod"
+		name="pref_period"
 		translatable="false">period</string>
 	<string name="period">Period between scans</string>
 	<string name="periodSummary">%s seconds</string>
 	<string
-		name="kreject"
+		name="pref_reject"
 		translatable="false">reject</string>
 	<string name="reject">Reject weak APs</string>
 	<string name="rejectSummary">Avoid connections to APs with weak signal.</string>
 	<string
-		name="krssi"
+		name="pref_rssi"
 		translatable="false">rssi</string>
 	<string name="rssi">Minimum power</string>
 	<string
@@ -62,24 +62,24 @@
 		translatable="false">%s dBm</string>
 	<string name="notifications">Notifications</string>
 	<string
-		name="knotify"
+		name="pref_notify"
 		translatable="false">notify</string>
 	<string name="notify">Notify</string>
 	<string
-		name="ksuccess"
+		name="pref_success"
 		translatable="false">success</string>
 	<string name="success">Tone (success)</string>
 	<string
-		name="kfailure"
+		name="pref_failure"
 		translatable="false">failure</string>
 	<string name="failure">Tone (error)</string>
 	<string
-		name="kvibrate"
+		name="pref_vibrate"
 		translatable="false">vibrate</string>
 	<string name="vibrate">Vibrate</string>
 	<string name="connected">Connected to \"%s\".</string>
-	<string name="fon_error">Error %1$s: \"%2$s\"</string>
-	<string name="cred_error">Invalid credentials</string>
+	<string name="fon_error">Error %1$s: \"%2$s\".</string>
+	<string name="cred_error">Invalid credentials.</string>
 	<string name="configure">Touch to configure.</string>
-	<string name="started">Session started</string>
+	<string name="started">Session started.</string>
 </resources>

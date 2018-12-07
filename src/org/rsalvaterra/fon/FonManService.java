@@ -219,7 +219,7 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	static boolean isAutoConnectEnabled(final Context c) {
-		return FonManService.getPreference(c, R.string.kautoconnect, true);
+		return FonManService.getPreference(c, R.string.pref_autoconnect, true);
 	}
 
 	static void start(final Context c, final String a) {
@@ -270,7 +270,7 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private String getFailureTone() {
-		return FonManService.getPreference(this, R.string.kfailure, "");
+		return FonManService.getPreference(this, R.string.pref_failure, "");
 	}
 
 	private int getFonId(final WifiManager wm, final WifiConfiguration[] wca, final ScanResult[] sra) {
@@ -287,8 +287,8 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private int getMinimumRssi() {
-		if (FonManService.getPreference(this, R.string.kreject, false)) {
-			return Integer.parseInt(FonManService.getPreference(this, R.string.krssi, Constants.DEFAULT_MINIMUM_RSSI));
+		if (FonManService.getPreference(this, R.string.pref_reject, false)) {
+			return Integer.parseInt(FonManService.getPreference(this, R.string.pref_rssi, Constants.DEFAULT_MINIMUM_RSSI));
 		}
 		return Integer.MIN_VALUE;
 	}
@@ -317,11 +317,11 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private String getPassword() {
-		return FonManService.getPreference(this, R.string.kpassword, "");
+		return FonManService.getPreference(this, R.string.pref_password, "");
 	}
 
 	private int getPeriod() {
-		return Integer.parseInt(FonManService.getPreference(this, R.string.kperiod, Constants.DEFAULT_PERIOD));
+		return Integer.parseInt(FonManService.getPreference(this, R.string.pref_period, Constants.DEFAULT_PERIOD));
 	}
 
 	private ScanResult[] getScanResults(final WifiManager wm) {
@@ -332,11 +332,11 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private String getSuccessTone() {
-		return FonManService.getPreference(this, R.string.ksuccess, "");
+		return FonManService.getPreference(this, R.string.pref_success, "");
 	}
 
 	private String getUsername() {
-		return FonManService.getPreference(this, R.string.kusername, "");
+		return FonManService.getPreference(this, R.string.pref_username, "");
 	}
 
 	private void handleError(final WifiManager wm, final WifiInfo wi, final String[] lr) {
@@ -356,19 +356,19 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private boolean isReconnectEnabled() {
-		return FonManService.getPreference(this, R.string.kreconnect, false);
+		return FonManService.getPreference(this, R.string.pref_reconnect, false);
 	}
 
 	private boolean isSecureEnabled() {
-		return FonManService.getPreference(this, R.string.ksecure, true);
+		return FonManService.getPreference(this, R.string.pref_secure, true);
 	}
 
 	private boolean isSoundEnabled() {
-		return FonManService.getPreference(this, R.string.knotify, true);
+		return FonManService.getPreference(this, R.string.pref_notify, true);
 	}
 
 	private boolean isVibrationEnabled() {
-		return FonManService.getPreference(this, R.string.kvibrate, false);
+		return FonManService.getPreference(this, R.string.pref_vibrate, false);
 	}
 
 	private void login(final WifiManager wm) {

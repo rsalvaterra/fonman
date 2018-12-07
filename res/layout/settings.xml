@@ -13,7 +13,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="false"
-			android:key="@string/kautoconnect"
+			android:key="@string/pref_autoconnect"
 			android:summary="@string/autoconnectSummary"
 			android:title="@string/autoconnect" />
 
@@ -21,7 +21,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:inputType="textEmailAddress"
-			android:key="@string/kusername"
+			android:key="@string/pref_username"
 			android:summary="@string/usernameSummary"
 			android:title="@string/username" />
 
@@ -29,7 +29,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:inputType="textPassword"
-			android:key="@string/kpassword"
+			android:key="@string/pref_password"
 			android:summary="@string/passwordSummary"
 			android:title="@string/password" />
 
@@ -44,15 +44,15 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="true"
-			android:key="@string/knotify"
+			android:key="@string/pref_notify"
 			android:title="@string/notify" />
 
 		<RingtonePreference
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="content://settings/system/notification_sound"
-			android:dependency="@string/knotify"
-			android:key="@string/ksuccess"
+			android:dependency="@string/pref_notify"
+			android:key="@string/pref_success"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:ringtoneType="notification"
 			android:title="@string/success" />
@@ -61,8 +61,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="content://settings/system/notification_sound"
-			android:dependency="@string/knotify"
-			android:key="@string/kfailure"
+			android:dependency="@string/pref_notify"
+			android:key="@string/pref_failure"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:ringtoneType="notification"
 			android:title="@string/failure" />
@@ -71,8 +71,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="false"
-			android:dependency="@string/knotify"
-			android:key="@string/kvibrate"
+			android:dependency="@string/pref_notify"
+			android:key="@string/pref_vibrate"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:title="@string/vibrate" />
 
@@ -87,7 +87,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="false"
-			android:key="@string/kreconnect"
+			android:key="@string/pref_reconnect"
 			android:summary="@string/reconnectSummary"
 			android:title="@string/reconnect" />
 
@@ -95,8 +95,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="true"
-			android:dependency="@string/kreconnect"
-			android:key="@string/ksecure"
+			android:dependency="@string/pref_reconnect"
+			android:key="@string/pref_secure"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:summary="@string/secureSummary"
 			android:title="@string/secure" />
@@ -105,9 +105,9 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="300"
-			android:dependency="@string/kreconnect"
+			android:dependency="@string/pref_reconnect"
 			android:inputType="number"
-			android:key="@string/kperiod"
+			android:key="@string/pref_period"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:maxLength="4"
 			android:title="@string/period" />
@@ -116,7 +116,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="false"
-			android:key="@string/kreject"
+			android:key="@string/pref_reject"
 			android:summary="@string/rejectSummary"
 			android:title="@string/reject" />
 
@@ -124,9 +124,9 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:defaultValue="-80"
-			android:dependency="@string/kreject"
+			android:dependency="@string/pref_reject"
 			android:inputType="numberSigned"
-			android:key="@string/krssi"
+			android:key="@string/pref_rssi"
 			android:layout="?android:attr/preferenceLayoutChild"
 			android:maxLength="3"
 			android:title="@string/rssi" />
@@ -136,7 +136,7 @@
 	<Preference
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:key="@string/kabout"
+		android:key="@string/pref_about"
 		android:title="@string/about" />
 
 </PreferenceScreen>

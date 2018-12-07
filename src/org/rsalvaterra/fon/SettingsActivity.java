@@ -40,11 +40,11 @@ public final class SettingsActivity extends PreferenceActivity implements OnClic
 	public void onCreate(final Bundle b) {
 		super.onCreate(b);
 		addPreferencesFromResource(R.layout.settings);
-		setOnPreferenceChangeListener(R.string.kperiod, Constants.DEFAULT_PERIOD);
-		setOnPreferenceChangeListener(R.string.krssi, Constants.DEFAULT_MINIMUM_RSSI);
-		setOnPreferenceChangeListener(R.string.ksuccess, "");
-		setOnPreferenceChangeListener(R.string.kfailure, "");
-		setOnPreferenceClickListener(R.string.kabout);
+		setOnPreferenceChangeListener(R.string.pref_period, Constants.DEFAULT_PERIOD);
+		setOnPreferenceChangeListener(R.string.pref_rssi, Constants.DEFAULT_MINIMUM_RSSI);
+		setOnPreferenceChangeListener(R.string.pref_success, "");
+		setOnPreferenceChangeListener(R.string.pref_failure, "");
+		setOnPreferenceClickListener(R.string.pref_about);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public final class SettingsActivity extends PreferenceActivity implements OnClic
 		final Context c = p.getContext();
 		final String k = p.getKey();
 		String s;
-		if (k.equals(c.getString(R.string.kperiod))) {
+		if (k.equals(c.getString(R.string.pref_period))) {
 			s = c.getString(R.string.periodSummary, v);
-		} else if (k.equals(c.getString(R.string.krssi))) {
+		} else if (k.equals(c.getString(R.string.pref_rssi))) {
 			s = c.getString(R.string.rssiSummary, v);
 		} else {
 			s = (String) v;
