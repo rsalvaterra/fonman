@@ -438,7 +438,7 @@ public final class FonManService extends Service implements Callback, Comparator
 	}
 
 	private void notifyFonError(final String[] lr) {
-		notifyError(getString(R.string.fon_error, Integer.parseInt(lr[0]), lr[1]));
+		notifyError(getString(R.string.fon_error, lr[0], lr[1]));
 	}
 
 	private void removeNotification() {

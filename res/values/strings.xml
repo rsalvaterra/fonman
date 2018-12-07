@@ -78,7 +78,7 @@
 		translatable="false">vibrate</string>
 	<string name="vibrate">Vibrate</string>
 	<string name="connected">Connected to \"%s\".</string>
-	<string name="fon_error">Error %1$d: \"%2$s\"</string>
+	<string name="fon_error">Error %1$s: \"%2$s\"</string>
 	<string name="cred_error">Invalid credentials</string>
 	<string name="configure">Touch to configure.</string>
 	<string name="started">Session started</string>

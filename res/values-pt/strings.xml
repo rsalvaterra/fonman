@@ -27,7 +27,7 @@
 	<string name="failure">Toque (erro)</string>
 	<string name="vibrate">Vibrar</string>
 	<string name="connected">Ligado a «%s».</string>
-	<string name="fon_error">Erro %1$d: «%2$s»</string>
+	<string name="fon_error">Erro %1$s: «%2$s»</string>
 	<string name="cred_error">Credenciais inválidas</string>
 	<string name="configure">Toque para configurar.</string>
 	<string name="started">Sessão iniciada</string>
